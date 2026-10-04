@@ -1,14 +1,10 @@
 import asyncio
-import os
 import logging
 from aiogram import Bot, Dispatcher
-from dotenv import load_dotenv
+from bot.config import BOT_TOKEN
+from bot.handlers import router
 
 logging.basicConfig(level=logging.INFO)
-
-load_dotenv()
-
-BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
 
 async def main():
     if not BOT_TOKEN:
@@ -17,6 +13,9 @@ async def main():
 
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
+
+    # Регистрируем роутер с командами
+    dp.include_router(router)
 
     print("--- БОТ УСПЕШНО ИНИЦИАЛИЗИРОВАН И ЗАПУЩЕН ---")
     await dp.start_polling(bot)
