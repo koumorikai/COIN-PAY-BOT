@@ -8,6 +8,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: types.Message):
+    # Сохраняем или получаем пользователя в Supabase
     await get_or_create_user(
         telegram_id=message.from_user.id,
         username=message.from_user.username or "",
@@ -26,7 +27,7 @@ async def cmd_start(message: types.Message):
     await message.answer(
         f"Привет, {message.from_user.first_name}!\n\n"
         "Через нашего бота ты можешь пополнить **Steam**, купить **TikTok Coins** "
-        "и оплатить другие недоступные сервисы.\n\n"
+        "и оплатить другие цифровые услуги.\n\n"
         "Нажми кнопку ниже, чтобы открыть магазин:",
         reply_markup=kb,
         parse_mode="Markdown"
